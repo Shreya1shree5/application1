@@ -4,11 +4,11 @@ In this post, we’ll walk through the process of deploying a simple containeriz
 
 **Tech Stack & Tools Used**
 
-Flask: Python-based web framework
-Docker: Containerization for easy deployment
-Terraform: Infrastructure-as-code for managing GCP resources
-Jenkins: CI/CD automation for testing, building, and deploying the app
-Google Cloud Platform (GCP): Hosting and orchestration of services via GKE
+**Flask:** Python-based web framework
+**Docker:** Containerization for easy deployment
+**Terraform:** Infrastructure-as-code for managing GCP resources
+**Jenkins:** CI/CD automation for testing, building, and deploying the app
+**Google Cloud Platform (GCP):** Hosting and orchestration of services via GKE
 
 **Step 1: Setting Up the Flask Application**
 We start by creating a basic Flask app (app.py) that serves a home page and provides a foundation for our Docker container.
