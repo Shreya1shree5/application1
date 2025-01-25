@@ -1,3 +1,2 @@
-# proj1
-# proj1
-# proj1
+Description
+I was able to develop a CI/CD pipeline for a containerized Python application using Jenkins, Docker, GCP, Artifact Registry, Kubernetes (GKE), and Terraform. The pipeline handled automatic builds, tests, security scans, and deployments to GCP GKE based on branch triggers (dev for staging, main for production) with \healthcheck endpoint that shows the last_commit_sha.
