@@ -105,7 +105,7 @@ pipeline {
         stage('Deploy to GKE') {
             steps {
                 withCredentials([file(credentialsId: 'gcp-credentials', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-            sh '''
+            sh """
                 # Authenticate and set project
                 gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
                 gcloud config set project ${GCP_PROJECT_ID}
@@ -120,7 +120,7 @@ pipeline {
                 # Verify deployment
                 kubectl get pods
                 kubectl get svc
-            '''
+            """
             }
         }
     }
