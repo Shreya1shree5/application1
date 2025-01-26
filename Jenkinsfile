@@ -11,7 +11,7 @@ pipeline {
         ARTIFACT_REGISTRY_REPO = 'gabapprepothree'
         ARTIFACT_REGISTRY_HOSTNAME = "${ARTIFACT_REGISTRY_LOCATION}-docker.pkg.dev" //Registry hostname
         TERRAFORM_DIR = 'terraform'  // Directory containing Terraform files
-        //CREDENTIALS_ID = 'kubernetes'
+        CREDENTIALS_ID = 'kubernetes'
     }
 
     stages {
