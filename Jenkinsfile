@@ -113,10 +113,6 @@ pipeline {
                 # Get cluster credentials with explicit zone
                 gcloud container clusters get-credentials ${GKE_CLUSTER_NAME} --zone us-central1-a --project ${GCP_PROJECT_ID}
 
-                # Force kubectl configuration
-                echo "export USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> ~/.bashrc
-                source ~/.bashrc
-
                 # Apply manifests
                 kubectl apply -f kubernetes/deployment.yaml
                 kubectl apply -f kubernetes/service.yaml
