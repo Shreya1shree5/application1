@@ -101,29 +101,30 @@ pipeline {
                 }
             }
         }
-//Deploy to Google Kubernetes Engine
-        stage('Deploy to GKE') {
-            steps {
-                withCredentials([file(credentialsId: 'gcp-credentials', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-            sh """
-                # Authenticate and set project
-                gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-                gcloud config set project ${GCP_PROJECT_ID}
+
+          stage('Deploy to GKE') {
+              steps {
+                  withCredentials([file(credentialsId: 'gcp-credentials', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+              sh '''
+                  # Authenticate and set project
+                  gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+                  gcloud config set project ${GCP_PROJECT_ID}
+
+                 # Get cluster credentials with explicit zone
+                  gcloud container clusters get-credentials ${GKE_CLUSTER_NAME} --zone us-central1-a --project ${GCP_PROJECT_ID}
+
+                 # Force kubectl configuration
+                  echo "export USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> ~/.bashrc
+                  source ~/.bashrc
+
+                 # Apply manifests
+                  kubectl apply -f kubernetes/deployment.yaml
+                  kubectl apply -f kubernetes/service.yaml
                 
-                # Get cluster credentials with explicit zone
-                gcloud container clusters get-credentials ${GKE_CLUSTER_NAME} --zone us-central1-a --project ${GCP_PROJECT_ID}
-                
-                # Set USE_GKE_GCLOUD_AUTH_PLUGIN
-                export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-                
-                # Apply manifests
-                kubectl apply -f kubernetes/deployment.yaml
-                kubectl apply -f kubernetes/service.yaml
-                
-                # Verify deployment
-                kubectl get pods
-                kubectl get svc
-            """
+                 # Verify deployment
+                  kubectl get pods
+                  kubectl get svc
+              '''
             }
         }
     }
