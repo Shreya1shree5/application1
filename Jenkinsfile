@@ -102,32 +102,35 @@ pipeline {
             }
         }
 
-          stage('Deploy to GKE') {
-              steps {
-                  withCredentials([file(credentialsId: 'gcp-credentials', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-              sh '''
-                  # Authenticate and set project
-                  gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-                  gcloud config set project ${GCP_PROJECT_ID}
+      stage('Deploy to GKE') {
+         steps {
+            withCredentials([file(credentialsId: 'gcp-credentials', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                sh '''
+                   #!/bin/bash
+                   set -e
 
-                 # Get cluster credentials with explicit zone
-                  gcloud container clusters get-credentials ${GKE_CLUSTER_NAME} --zone us-central1-a --project ${GCP_PROJECT_ID}
+                 # Authenticate and set project
+                 gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+                 gcloud config set project ${GCP_PROJECT_ID}
 
-                 # Force kubectl configuration
-                  echo "export USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> ~/.bashrc
-                  source ~/.bashrc
+                # Get cluster credentials with explicit zone
+                gcloud container clusters get-credentials ${GKE_CLUSTER_NAME} --zone us-central1-a --project ${GCP_PROJECT_ID}
 
-                 # Apply manifests
-                  kubectl apply -f kubernetes/deployment.yaml
-                  kubectl apply -f kubernetes/service.yaml
-                
-                 # Verify deployment
-                  kubectl get pods
-                  kubectl get svc
-              '''
-            }
+                # Export environment variable to use GKE authentication plugin
+                export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+                # Apply Kubernetes manifests
+                kubectl apply -f kubernetes/deployment.yaml
+                kubectl apply -f kubernetes/service.yaml
+
+                # Verify deployment
+                kubectl get pods
+                kubectl get svc
+            '''
         }
     }
+}
+
     }
 //Post-pipeline actions
     post {
