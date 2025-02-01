@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         PYTHON_VERSION = '3.x' // Python version to use
-        GCP_PROJECT_ID = 'solid-altar-444910-c9' //Google Cloud Project ID
+        GCP_PROJECT_ID = '' //Google Cloud Project ID
         GCP_REGION = 'us-central1-a' 
         GKE_CLUSTER_NAME = 'gke-cluster-2'
         ARTIFACT_REGISTRY_LOCATION = 'us-central1'
