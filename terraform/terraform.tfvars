@@ -1,5 +1,5 @@
 # Project and region
-project_id = "solid-altar-444910-c9"
+project_id = ""
 region     = "us-central1"
 zone       = "us-central1-a"
 
