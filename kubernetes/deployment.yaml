@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: us-central1-docker.pkg.dev/solid-altar-444910-c9/gabapprepothree/flask-app:latest
+        image: us-central1-docker.pkg.dev/PROJECTID/gabapprepothree/flask-app:latest
         ports:
         - containerPort: 5000
         env:
